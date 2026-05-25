@@ -9,11 +9,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import { rateLimit } from "./middleware/rateLimit.js";
 
 const allowedOrigins = new Set([
-  env.clientUrl,
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "http://localhost:4173",
-  "http://127.0.0.1:4173",
+  ...env.clientUrls,
 ]);
 
 export const createApp = () => {

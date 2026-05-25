@@ -78,6 +78,5 @@ const problemSchema = new mongoose.Schema(
 );
 
 problemSchema.index({ title: "text", tags: "text" });
-problemSchema.index({ problemCode: 1 });
 
 export const Problem = mongoose.model("Problem", problemSchema);

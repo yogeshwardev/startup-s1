@@ -269,6 +269,7 @@ export const bulkCreateUsers = catchAsync(async (req, res) => {
     email: entry.email.toLowerCase(),
     registrationNumber: normalizeRegistrationNumber(entry.registrationNumber),
     password: entry.password,
+    phone: entry.phone.trim(),
     role: entry.role,
     department: normalizeDepartmentName(entry.department),
     year: Number(entry.year),

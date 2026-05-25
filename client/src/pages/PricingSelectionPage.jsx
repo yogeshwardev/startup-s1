@@ -70,7 +70,7 @@ const PricingSelectionPage = () => {
               ))}
             </ul>
             <CheckoutButton 
-              amount={49900} 
+              planType="SEMESTER"
               planName="Semester Pass"
               onSuccess={handleSuccess}
               className="w-full py-3 rounded-lg font-bold bg-surface-100 hover:bg-surface-200 text-white transition-colors"
@@ -103,7 +103,7 @@ const PricingSelectionPage = () => {
               ))}
             </ul>
             <CheckoutButton 
-              amount={79900} 
+              planType="YEARLY"
               planName="Yearly Pass"
               onSuccess={handleSuccess}
               className="w-full py-3 rounded-lg font-bold bg-gradient-to-r from-brand-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-white transition-all shadow-lg"
@@ -133,7 +133,7 @@ const PricingSelectionPage = () => {
               ))}
             </ul>
             <CheckoutButton 
-              amount={159900} 
+              planType="GRADUATION"
               planName="Graduation Pass"
               onSuccess={handleSuccess}
               className="w-full py-3 rounded-lg font-bold bg-surface-100 hover:bg-surface-200 text-white transition-colors"

@@ -13,9 +13,9 @@ const defaultRegister = {
   phone: "",
 };
 
-const LandingPage = () => {
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [mode, setMode] = useState("login");
+const LandingPage = ({ initialAuthMode = null }) => {
+  const [showAuthModal, setShowAuthModal] = useState(Boolean(initialAuthMode));
+  const [mode, setMode] = useState(initialAuthMode || "login");
   const [form, setForm] = useState(defaultRegister);
   const [error, setError] = useState("");
   const { login, register, loading } = useAuth();
@@ -186,7 +186,7 @@ const LandingPage = () => {
             <div className="rounded-3xl bg-surface-100 border border-border p-8 hover:border-brand-500/20 transition-all flex flex-col shadow-card">
               <h3 className="text-xl font-medium text-gray-300 mb-2">Graduation Pass</h3>
               <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-bold">₹1799</span>
+                <span className="text-4xl font-bold">₹1599</span>
                 <span className="text-gray-500">/ 3 years</span>
               </div>
               <ul className="space-y-4 mb-8 flex-1">

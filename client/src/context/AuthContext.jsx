@@ -5,8 +5,20 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
+    const token = localStorage.getItem("campusarena-token");
     const stored = localStorage.getItem("campusarena-user");
-    return stored ? JSON.parse(stored) : null;
+
+    if (!token || !stored) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(stored);
+    } catch (_error) {
+      localStorage.removeItem("campusarena-token");
+      localStorage.removeItem("campusarena-user");
+      return null;
+    }
   });
   const [loading, setLoading] = useState(false);
 

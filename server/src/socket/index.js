@@ -5,7 +5,7 @@ import { setIo } from "../services/socketService.js";
 export const initializeSocket = (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: env.clientUrl,
+      origin: env.clientUrls,
       credentials: true,
     },
   });

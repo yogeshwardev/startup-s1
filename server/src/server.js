@@ -12,8 +12,8 @@ const startServer = async () => {
   initializeSocket(server);
   startExecutionWorker();
 
-  server.listen(env.port, () => {
-    console.log(`CampusArena server running on port ${env.port}`);
+  server.listen(env.port, "0.0.0.0", () => {
+    console.log(`CampusArena server running on port ${env.port} and bound to 0.0.0.0`);
   });
 };
 

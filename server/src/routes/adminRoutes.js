@@ -53,6 +53,7 @@ router.post(
       .notEmpty()
       .withMessage("Registration number is required."),
     body("password").isLength({ min: 8 }).withMessage("Password must be at least 8 characters."),
+    body("phone").trim().notEmpty().withMessage("Phone number is required."),
     body("role").isIn(ROLE_LIST).withMessage("Invalid role."),
     body("permissions").optional().isArray().withMessage("Permissions must be an array."),
     body("name").optional().trim(),
@@ -85,6 +86,7 @@ router.post(
     body("users.*.password")
       .isLength({ min: 8 })
       .withMessage("Password must be at least 8 characters."),
+    body("users.*.phone").trim().notEmpty().withMessage("Phone number is required."),
     body("users.*.role").isIn(ROLE_LIST).withMessage("Invalid role."),
     body("users.*.permissions").optional().isArray().withMessage("Permissions must be an array."),
     body("users.*.name").optional().trim(),

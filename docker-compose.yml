@@ -1,11 +1,9 @@
-version: "3.9"
-
 services:
   mongo:
     image: mongo:7
     restart: unless-stopped
     ports:
-      - "27017:27017"
+      - "127.0.0.1:27017:27017"
     volumes:
       - mongo_data:/data/db
 
@@ -13,7 +11,7 @@ services:
     image: redis:7-alpine
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
 
   runner:
     build:
@@ -21,6 +19,37 @@ services:
       dockerfile: docker/runner/Dockerfile
     image: campusarena-runner:latest
     command: ["sh", "-c", "echo runner image ready && tail -f /dev/null"]
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/server.Dockerfile
+    restart: unless-stopped
+    expose:
+      - "5000"
+    env_file:
+      - server/.env
+    environment:
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongo:27017/campusarena
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/client.Dockerfile
+      args:
+        VITE_RAZORPAY_KEY_ID: ${VITE_RAZORPAY_KEY_ID:-}
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
 
 volumes:
   mongo_data:

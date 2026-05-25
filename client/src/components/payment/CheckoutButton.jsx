@@ -12,8 +12,7 @@ const loadScript = (src) => {
 };
 
 const CheckoutButton = ({ 
-  amount, 
-  currency = 'INR', 
+  planType,
   planName = 'Premium Pass',
   onSuccess,
   children,
@@ -35,9 +34,7 @@ const CheckoutButton = ({
     try {
       // 2. Create Order on Backend
       const orderResponse = await http.post('/payment/create-order', {
-        amount,
-        currency,
-        receipt: `receipt_${Date.now()}`
+        planType
       });
 
       const { order_id, amount: orderAmount, currency: orderCurrency } = orderResponse.data;

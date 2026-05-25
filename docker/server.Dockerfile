@@ -2,9 +2,9 @@ FROM node:22-alpine
 
 WORKDIR /app/server
 
-COPY server/package.json ./
+COPY server/package*.json ./
 
-RUN npm install
+RUN npm ci --omit=dev
 
 COPY server ./
 

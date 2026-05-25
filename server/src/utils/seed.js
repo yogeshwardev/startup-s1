@@ -22,6 +22,12 @@ const starterCode = {
     "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n  }\n}\n",
 };
 
+const adminSeedPassword = process.env.ADMIN_SEED_PASSWORD || "Admin@123";
+
+if (process.env.NODE_ENV === "production" && adminSeedPassword === "Admin@123") {
+  throw new Error("ADMIN_SEED_PASSWORD must be set before seeding production.");
+}
+
 const easyTitles = [
   ["Campus Two Sum", ["Array", "Hash Map"]],
   ["Attendance Streak Counter", ["Array"]],
@@ -186,7 +192,8 @@ const seed = async () => {
     admin = await User.create({
       name: "Campus Admin",
       email: "admin@campusarena.edu",
-      password: "Admin@123",
+      phone: "0000000000",
+      password: adminSeedPassword,
       role: ROLES.ADMIN,
       department: "CSE",
       year: 4,

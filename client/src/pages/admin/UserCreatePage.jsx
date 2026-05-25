@@ -11,6 +11,7 @@ const defaultNewUser = {
   email: "",
   registrationNumber: "",
   password: "",
+  phone: "",
   role: "STUDENT",
   department: "",
   year: 1,
@@ -40,17 +41,18 @@ const parseBulkUsers = (text) =>
         !(
           index === 0 &&
           line.toLowerCase() ===
-            "email,registrationnumber,password,department,year,role"
+            "email,registrationnumber,password,phone,department,year,role"
         )
     )
     .map((line) => {
-      const [email, registrationNumber, password, department, year, role] =
+      const [email, registrationNumber, password, phone, department, year, role] =
         line.split(",").map((item) => item.trim());
 
       return {
         email,
         registrationNumber,
         password,
+        phone,
         department,
         year: Number(year),
         role: role?.toUpperCase(),
@@ -104,6 +106,11 @@ const UserCreatePage = () => {
       return false;
     }
 
+    if (!newUser.phone.trim()) {
+      toast.error("Phone required", "Enter a phone number for this account.");
+      return false;
+    }
+
     return true;
   };
 
@@ -145,6 +152,7 @@ const UserCreatePage = () => {
         !validateEmail(entry.email) ||
         !entry.registrationNumber ||
         !validatePassword(entry.password) ||
+        !entry.phone ||
         !entry.department ||
         !entry.role ||
         !Number.isInteger(entry.year) ||
@@ -155,7 +163,7 @@ const UserCreatePage = () => {
     if (invalidRow) {
       toast.error(
         "Invalid bulk row",
-        "Each row must be email, registration number, password, department, year, role."
+        "Each row must be email, registration number, password, phone, department, year, role."
       );
       return;
     }
@@ -272,6 +280,19 @@ const UserCreatePage = () => {
                   setNewUser((current) => ({ ...current, password: event.target.value }))
                 }
                 placeholder="Use a strong temporary password"
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Phone number
+              </label>
+              <input
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none dark:border-white/10 dark:bg-white/5"
+                value={newUser.phone}
+                onChange={(event) =>
+                  setNewUser((current) => ({ ...current, phone: event.target.value }))
+                }
+                placeholder="Contact number"
               />
             </div>
             <div>
@@ -402,7 +423,7 @@ const UserCreatePage = () => {
             ) : (
               <EmptyState
                 title="No bulk users yet"
-                description="Upload a CSV file using email, registration number, password, department, year, role."
+                description="Upload a CSV file using email, registration number, password, phone, department, year, role."
               />
             )}
           </div>

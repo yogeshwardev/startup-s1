@@ -22,20 +22,21 @@ CampusArena is a college-exclusive competitive coding and career preparation pla
 ## Local setup
 
 1. Copy `server/.env.example` to `server/.env`.
-2. Copy `client/.env.example` to `client/.env` if you want custom frontend URLs.
-3. Start Docker Desktop or another Docker engine.
-4. Run `docker compose up --build` to start MongoDB, Redis, and build the isolated runner image.
-5. Start the backend and frontend on the host with `npm.cmd`.
+2. Replace `JWT_SECRET` and `ADMIN_SEED_PASSWORD` with strong unique values before a production deployment.
+3. Copy `client/.env.example` to `client/.env` only for host-based development overrides.
+4. For Docker deployment, add `VITE_RAZORPAY_KEY_ID=<public-key-id>` to a root `.env` file so it is injected during the frontend build.
+5. Start Docker Desktop or another Docker engine.
+6. Run `docker compose up --build` to start the production web app, API, MongoDB, Redis, and isolated runner image.
 
 Infrastructure services:
 
 - MongoDB: `mongodb://localhost:27017`
 - Redis: `redis://localhost:6379`
 
-Application services started on the host:
+Application services when deployed through Docker:
 
-- Frontend: `http://localhost:5173`
-- API: `http://localhost:5000/api`
+- Frontend: `http://localhost:3000`
+- API: `http://localhost:3000/api`
 
 ## Direct development without Compose
 
@@ -55,6 +56,8 @@ cd client
 npm.cmd install
 npm.cmd run dev
 ```
+
+The development frontend runs at `http://localhost:3000` and proxies `/api` to the host backend.
 
 You still need MongoDB, Redis, and Docker running locally because submissions are evaluated in isolated containers and never on the host.
 
@@ -83,12 +86,12 @@ npm.cmd install
 npm.cmd run seed
 ```
 
-This creates an admin account and a sample daily problem.
+This creates an admin account and sample problem data. In production, `ADMIN_SEED_PASSWORD` must be set before seeding.
 
 ## Default admin seed
 
 - Email: `admin@campusarena.edu`
-- Password: `Admin@123`
+- Password: `Admin@123` in development only; production uses `ADMIN_SEED_PASSWORD`.
 
 ## Notes
 

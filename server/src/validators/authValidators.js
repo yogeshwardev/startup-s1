@@ -3,6 +3,8 @@ import { ROLE_LIST } from "../constants/roles.js";
 
 export const registerValidator = [
   body("email")
+    .trim()
+    .normalizeEmail()
     .isEmail()
     .withMessage("Valid email is required.")
     .custom((email) => {
@@ -23,6 +25,6 @@ export const registerValidator = [
 ];
 
 export const loginValidator = [
-  body("email").isEmail().withMessage("Valid email is required."),
+  body("email").trim().normalizeEmail().isEmail().withMessage("Valid email is required."),
   body("password").notEmpty().withMessage("Password is required."),
 ];

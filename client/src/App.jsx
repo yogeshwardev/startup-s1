@@ -47,6 +47,8 @@ import { useAuth } from "./hooks/useAuth";
 
 const App = () => {
   const { user } = useAuth();
+  const authenticatedHome =
+    user?.role === "ADMIN" ? "/admin" : user?.role === "TEACHER" ? "/teacher" : "/dashboard";
 
   return (
     <Routes>
@@ -54,11 +56,15 @@ const App = () => {
         path="/"
         element={
           user ? (
-            <Navigate to={user.role === "ADMIN" ? "/admin" : user.role === "TEACHER" ? "/teacher" : "/dashboard"} replace />
+            <Navigate to={authenticatedHome} replace />
           ) : (
             <LandingPage />
           )
         }
+      />
+      <Route
+        path="/auth"
+        element={user ? <Navigate to={authenticatedHome} replace /> : <LandingPage initialAuthMode="login" />}
       />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/privacy" element={<PrivacyPolicyPage />} />
@@ -485,7 +491,7 @@ const App = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="*" element={<Navigate to={user ? "/" : "/auth"} replace />} />
+      <Route path="*" element={<Navigate to={user ? authenticatedHome : "/auth"} replace />} />
     </Routes>
   );
 };
