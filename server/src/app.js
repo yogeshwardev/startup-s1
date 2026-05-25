@@ -10,6 +10,10 @@ import { rateLimit } from "./middleware/rateLimit.js";
 
 const allowedOrigins = new Set([
   ...env.clientUrls,
+  "http://13.62.95.158",
+  "http://13.62.95.158:3000",
+  "http://campuscoders.yogeshwar.me",
+  "http://campuscoders.yogeshwar.me:3000"
 ]);
 
 export const createApp = () => {
