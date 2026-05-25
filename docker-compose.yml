@@ -25,8 +25,8 @@ services:
       context: .
       dockerfile: docker/server.Dockerfile
     restart: unless-stopped
-    expose:
-      - "5000"
+    ports:
+      - "5000:5000"
     env_file:
       - server/.env
     environment:
