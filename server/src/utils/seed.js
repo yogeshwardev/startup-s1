@@ -128,7 +128,7 @@ const hardTitles = [
 ];
 
 const buildProblem = (title, difficulty, tags, index, createdBy) => {
-  const problemCode = String(100001 + index);
+  const problemCode = `CC${100001 + index}`;
   const constraintsByDifficulty = {
     Easy: ["1 <= n <= 10^3", "Values fit in 32-bit signed integers"],
     Medium: ["1 <= n <= 10^5", "Aim for O(n log n) or better where possible"],
